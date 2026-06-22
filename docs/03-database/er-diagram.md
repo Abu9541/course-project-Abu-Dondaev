@@ -70,7 +70,7 @@ erDiagram
     }
     INSTALLMENT_PLANS {
         bigint id PK
-        bigint order_id FK_UK
+        bigint order_id FK
         numeric down_payment
         int term_months
         numeric monthly_payment

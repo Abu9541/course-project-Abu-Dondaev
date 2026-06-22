@@ -55,7 +55,7 @@
 - [Техническое задание (ТЗ)](07-management/technical-specification.md)
 - [Руководство пользователя](07-management/user-guide.md)
 - [Руководство администратора](07-management/admin-guide.md)
-- [Пояснительная записка](07-management/explanatory-note.md)
+- Пояснительная записка — добавляется отдельно в формате `.docx`
 
 ## Прочее
 

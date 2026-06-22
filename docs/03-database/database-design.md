@@ -85,7 +85,7 @@ erDiagram
     }
     installment_plans {
         bigint id PK
-        bigint order_id FK_UK
+        bigint order_id FK
         numeric down_payment
         int term_months "CHECK 3..84"
         numeric interest_rate

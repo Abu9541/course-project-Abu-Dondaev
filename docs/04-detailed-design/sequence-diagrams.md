@@ -84,9 +84,9 @@ sequenceDiagram
     V->>R: confirm(providerPaymentId, card)
     R->>C: POST /api/payments/{pid}/confirm
     C->>S: confirm(pid, clientId, request)
-    S->>S: Luhn + срок; имитация банка
+    S->>S: проверка Luhn и срока, имитация ответа банка
     alt Успех
-        S->>S: payment.succeed(); order.markPaid()  (транзакция)
+        S->>S: payment.succeed() и order.markPaid() в транзакции
         S->>N: notify(client) + notifyManagers()
         S-->>V: status = SUCCEEDED
         V-->>U: Экран-чек «Оплата прошла»
