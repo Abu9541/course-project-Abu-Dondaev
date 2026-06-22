@@ -1,0 +1,6 @@
+# Профиль для запуска в Docker (docker-compose). Активируется SPRING_PROFILES_ACTIVE=docker
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/autoshow
+    username: autoshow
+    password: autoshow

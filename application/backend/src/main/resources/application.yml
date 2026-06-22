@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: autoshow-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/autoshow}
+    username: ${DB_USERNAME:autoshow}
+    password: ${DB_PASSWORD:autoshow}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # Hibernate управляет схемой по сущностям; канонический DDL — в database/schema.sql
+      ddl-auto: update
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  # 8081, т.к. порт 8080 часто занят локальным Apache/XAMPP
+  port: ${SERVER_PORT:8081}
+  error:
+    include-message: always
+
+# --- Параметры приложения ------------------------------------------------
+app:
+  jwt:
+    # ВНИМАНИЕ: в продакшене задавайте секрет через переменную окружения JWT_SECRET (>= 32 символов)
+    secret: ${JWT_SECRET:autoshow-super-secret-key-change-me-in-production-0123456789}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}   # 24 часа
+
+# --- OpenAPI / Swagger ---------------------------------------------------
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+# --- Actuator ------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    ru.ncfu.autoshow: INFO
