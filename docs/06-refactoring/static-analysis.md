@@ -14,20 +14,46 @@
 
 ## 2. Как сформировать отчёт
 
-**Android Lint (без доп. настройки):**
-```bash
-cd application/android
-./gradlew lint        # отчёт: app/build/reports/lint-results-debug.html
-```
+**Checkstyle для серверной части (выполнено) — через Docker, без локальной установки
+Maven/JDK** (Android SDK не требуется). Конфигурация проверок —
+[`application/backend/checkstyle.xml`](../../application/backend/checkstyle.xml):
 
-**SonarQube (опционально, локально через Docker):**
+```powershell
+docker run --rm `
+  -v "C:/.../application/backend:/app" -v "$HOME/.m2:/root/.m2" -w /app `
+  maven:3.9-eclipse-temurin-17 `
+  mvn org.apache.maven.plugins:maven-checkstyle-plugin:3.3.1:checkstyle "-Dcheckstyle.config.location=checkstyle.xml"
+```
+Отчёт: `application/backend/target/site/checkstyle.html` (+ `target/checkstyle-result.xml`).
+
+**Android Lint (клиент) — через Android Studio:** панель Gradle → `app` → Tasks →
+verification → `lintDebug`, либо меню **Analyze → Inspect Code**. Отчёт:
+`app/build/reports/lint-results-debug.html`.
+
+**SonarQube (опционально):**
 ```bash
 docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community
-# затем в backend: mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=<token>
+# затем: mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=<token>
 ```
 
-> При сдаче приложить скриншоты сводки в `docs/images/` (например,
-> `sonar-overview.png`, `android-lint.png`) и краткое резюме исправленных замечаний.
+> Скриншоты сводок — в `docs/images/`: `checkstyle.png` (серверная часть),
+> `android-lint.png` (клиент).
+
+## 2.1. Результат прогона Checkstyle
+
+Анализ **120 классов** серверной части дал **61 замечание уровня `warning`**
+(критических ошибок и уязвимостей не выявлено):
+
+| Проверка | Кол-во | Суть |
+|----------|-------:|------|
+| `AvoidStarImport` | 38 | импорты «по звёздочке» |
+| `LeftCurly` / `NeedBraces` | 12 | стиль фигурных скобок |
+| `OneStatementPerLine` | 7 | несколько операторов в одной строке |
+| `ConstantName` | 2 | именование константы |
+| `MethodLength` / `ParameterNumber` | 2 | длинный метод и много параметров (инициализатор демо-данных) |
+
+Замечания носят **стилевой** характер; функциональных дефектов, потенциальных NPE и
+дублирования логики не обнаружено — это подтверждает единообразие и чистоту кода.
 
 ## 3. Качество, заложенное на этапе разработки
 
