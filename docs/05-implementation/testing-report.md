@@ -18,6 +18,8 @@
 | `PaymentServiceImplTest` | Создание платежа, проверка владельца/статуса, подтверждение (успех/отказ/некорректная карта) |
 | `NotificationServiceImplTest` | Рассылка менеджерам, счётчик непрочитанных, RBAC при markRead |
 | `FavoriteServiceImplTest` | Исключение проданных из избранного, идемпотентное добавление, удаление |
+| `ReviewServiceImplTest` | Запрет повторного отзыва, сохранение, RBAC при удалении |
+| `UserServiceImplTest` | 404 для несуществующего, смена роли, блокировка, обновление профиля |
 | `JwtServiceTest` (security) | Генерация и валидация JWT, извлечение subject/ролей |
 | `OrderTest` (entity) | Конечный автомат статусов заказа, запрет недопустимых переходов |
 | `VehicleTest` (entity) | `reserve()`/`markSold()`/`returnToStock()` и их инварианты |
@@ -25,10 +27,12 @@
 | `PaymentTest` (entity) | Статусная модель платежа (`succeed`/`fail`), маскирование карты |
 | `UserTest` (entity) | Признаки ролей (`isStaff` и др.), повышение лояльности |
 
-Итого: **13 тестовых классов**, покрывающих сервисы (Auth, Vehicle, Order, TestDrive,
-Payment, Notification, Favorite), сущности (Order, Vehicle, InstallmentPlan, Payment, User)
-и безопасность (JWT). Покрыты все ключевые слои бизнес-логики — порог МУ (> 40 %)
-уверенно превышен (точное значение подтверждается отчётом JaCoCo).
+Итого: **15 тестовых классов, 53 теста**, покрывающих сервисы (Auth, Vehicle, Order,
+TestDrive, Payment, Notification, Favorite, Review, User), сущности (Order, Vehicle,
+InstallmentPlan, Payment, User) и безопасность (JWT).
+
+**Фактическое покрытие (JaCoCo, прогон `mvn test`):** строки — **46.5 %**, инструкции —
+**43.7 %**, ветви — **44.0 %**. Порог МУ (> 40 %) выполнен с запасом.
 
 ## 3. Запуск и отчёт о покрытии
 
