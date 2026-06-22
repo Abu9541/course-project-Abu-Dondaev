@@ -8,25 +8,26 @@ gantt
     title Календарный план разработки ИС Автосалон
     dateFormat YYYY-MM-DD
     axisFormat %d.%m
+    todayMarker off
 
-    section Инициация
-    Этап 0. Бизнес-анализ        :done, e0, 2026-02-10, 14d
-    section Требования
-    Этап 1. Модель требований    :done, e1, after e0, 14d
-    section Архитектура
-    Этап 2. Архитектура PCMEF    :done, e2, after e1, 14d
-    section База данных
-    Этап 3. Проектирование БД    :done, e3, after e2, 14d
-    section Проектирование
-    Этап 4. Детальный дизайн     :done, e4, after e3, 14d
-    section Реализация
-    Этап 5. Реализация ядра      :done, e5, after e4, 14d
-    section Рефакторинг
-    Этап 6. Качество кода        :done, e6, after e5, 14d
-    section Интерфейс
-    Этап 7. Доработка UI         :active, e7, after e6, 14d
-    section Завершение
-    Этап 8. Документация и сдача :e8, after e7, 14d
+    section Этап 0. Инициация
+    Анализ        :done, e0, 2026-02-10, 14d
+    section Этап 1. Требования
+    Требования    :done, e1, after e0, 14d
+    section Этап 2. Архитектура
+    Архитектура   :done, e2, after e1, 14d
+    section Этап 3. База данных
+    БД            :done, e3, after e2, 14d
+    section Этап 4. Проектирование
+    Дизайн        :done, e4, after e3, 14d
+    section Этап 5. Реализация
+    Реализация    :done, e5, after e4, 14d
+    section Этап 6. Рефакторинг
+    Качество      :done, e6, after e5, 14d
+    section Этап 7. Интерфейс
+    Интерфейс     :active, e7, after e6, 14d
+    section Этап 8. Завершение
+    Сдача         :e8, after e7, 14d
 ```
 
 ## Соответствие этапов и весов (МУ)
