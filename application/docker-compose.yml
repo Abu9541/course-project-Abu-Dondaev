@@ -1,0 +1,38 @@
+# Запуск всего серверного стека: PostgreSQL + Spring Boot backend
+# Использование:  docker compose up --build
+# Swagger UI:     http://localhost:8081/swagger-ui.html
+# (хост-порт 8081, т.к. 8080 часто занят локальным Apache/XAMPP)
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: autoshow-db
+    environment:
+      POSTGRES_DB: autoshow
+      POSTGRES_USER: autoshow
+      POSTGRES_PASSWORD: autoshow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U autoshow -d autoshow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: autoshow-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET: autoshow-super-secret-key-change-me-in-production-0123456789
+      JWT_EXPIRATION_MS: "86400000"
+    ports:
+      - "8081:8081"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
