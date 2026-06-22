@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Курсовой демо-проект: backend отдаётся по локальной сети по HTTP (без TLS),
+  поэтому для разработки и демонстрации разрешаем незашифрованный (cleartext) трафик.
+  Это одно правило покрывает оба сценария:
+    • эмулятор Android  -> 10.0.2.2 (localhost ПК из эмулятора);
+    • реальный телефон  -> IP компьютера в той же Wi-Fi сети (напр. 10.206.136.112).
+  Поэтому при смене IP достаточно поправить только BASE_URL в app/build.gradle.kts.
+  В реальном продакшене так делать НЕ следует — backend должен работать по HTTPS.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
