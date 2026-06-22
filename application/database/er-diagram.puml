@@ -1,0 +1,119 @@
+@startuml
+' ER-диаграмма ИС «Автосалон» (PlantUML). Рендер: https://www.plantuml.com/plantuml
+hide circle
+skinparam linetype ortho
+
+entity users {
+  * id : bigint <<PK>>
+  --
+  * full_name : varchar
+  * email : varchar <<UK>>
+  * password_hash : varchar
+  phone : varchar
+  * role : varchar <<CLIENT|MANAGER|ADMIN>>
+  * loyalty_level : varchar
+  * pdn_consent : boolean
+  * active : boolean
+}
+
+entity brands {
+  * id : bigint <<PK>>
+  --
+  * name : varchar <<UK>>
+  country : varchar
+}
+
+entity vehicles {
+  * id : bigint <<PK>>
+  --
+  * brand_id : bigint <<FK>>
+  * model : varchar
+  * year : int
+  * vin : varchar <<UK>>
+  * price : numeric
+  * body_type : varchar
+  * engine_type : varchar
+  * transmission : varchar
+  * drive_type : varchar
+  * status : varchar
+}
+
+entity vehicle_images {
+  * id : bigint <<PK>>
+  --
+  * vehicle_id : bigint <<FK>>
+  * url : varchar
+}
+
+entity test_drives {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * vehicle_id : bigint <<FK>>
+  manager_id : bigint <<FK>>
+  * dealer_center : varchar
+  * scheduled_at : timestamp
+  * status : varchar
+}
+
+entity orders {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * vehicle_id : bigint <<FK>>
+  manager_id : bigint <<FK>>
+  * payment_type : varchar
+  * status : varchar
+  * total_price : numeric
+}
+
+entity installment_plans {
+  * id : bigint <<PK>>
+  --
+  * order_id : bigint <<FK,UK>>
+  * down_payment : numeric
+  * term_months : int
+  * interest_rate : numeric
+  * monthly_payment : numeric
+  * total_amount : numeric
+}
+
+entity favorites {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * vehicle_id : bigint <<FK>>
+}
+
+entity reviews {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * vehicle_id : bigint <<FK>>
+  * rating : int
+  comment : varchar
+}
+
+entity notifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * title : varchar
+  * message : varchar
+  * type : varchar
+  * is_read : boolean
+}
+
+brands ||--o{ vehicles
+vehicles ||--o{ vehicle_images
+users ||--o{ test_drives
+vehicles ||--o{ test_drives
+users ||--o{ orders
+vehicles ||--o{ orders
+orders ||--|| installment_plans
+users ||--o{ favorites
+vehicles ||--o{ favorites
+users ||--o{ reviews
+vehicles ||--o{ reviews
+users ||--o{ notifications
+@enduml
