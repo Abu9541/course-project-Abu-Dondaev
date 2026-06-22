@@ -1,0 +1,35 @@
+# ===== Служебные файлы ассистента (в репозиторий не добавляются) =====
+.claude/
+CLAUDE.md
+
+# ===== Сборочные артефакты =====
+**/build/
+target/
+*.class
+
+# ===== Gradle =====
+.gradle/
+# (gradle/wrapper/* — оставляем, нужен для сборки)
+
+# ===== Android =====
+local.properties
+*.apk
+*.aab
+*.keystore
+captures/
+.cxx/
+
+# ===== IDE =====
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# ===== ОС =====
+.DS_Store
+Thumbs.db
+
+# ===== Логи и временное =====
+*.log
+*.tmp
