@@ -6,9 +6,9 @@
 
 | Требование МУ | Статус | Где реализовано |
 |---------------|:---:|-----------------|
-| Мобильное приложение, 5+ экранов | ✅ | 14 экранов: вход, регистрация, каталог, карточка, тест-драйв, покупка, избранное, заявки, уведомления, профиль, обработка заявок, аналитика, форма авто, пользователи (`android/.../presentation`) |
-| Серверная часть на Java (Spring Boot) | ✅ | `backend/` (Spring Boot 3.2, Java 17) |
-| REST API (8+ эндпоинтов) | ✅ | 35+ эндпоинтов в `control/` (auth, vehicles, brands, test-drives, orders, favorites, reviews, notifications, dashboard, admin) |
+| Мобильное приложение, 5+ экранов | ✅ | 18 экранов: вход, регистрация, каталог, карточка, тест-драйв, покупка, **оплата**, избранное, заявки, уведомления, профиль, **настройки**, соглашение, обработка заявок, аналитика, форма авто, пользователи, **проданные авто** (`android/.../presentation`) |
+| Серверная часть на Java (Spring Boot) | ✅ | `backend/` (Spring Boot 3, Java 17) |
+| REST API (8+ эндпоинтов) | ✅ | 47 эндпоинтов в `control/` (auth, vehicles, brands, test-drives, orders, **payments**, favorites, reviews, notifications, dashboard, admin) |
 | Документация OpenAPI (Swagger UI) | ✅ | `springdoc-openapi`, `config/OpenApiConfig.java`, `http://localhost:8081/swagger-ui.html` |
 | Аутентификация через JWT | ✅ | `security/JwtService`, `JwtAuthenticationFilter`, `SecurityConfig` |
 | Локальное кэширование (оффлайн-режим) | ✅ | Room: `data/local/`, `CatalogRepository` + баннер офлайн-режима |
@@ -34,7 +34,7 @@
 |----------|:---:|-----|
 | Строгая иерархия слоёв P→C→M→E→F | ✅ | пакеты `control/mediator/entity/foundation` |
 | Коммуникация через интерфейсы (IService/IRepository) | ✅ | `mediator/*Service` + `mediator/impl`, `foundation/*Repository` |
-| Изоляция слоёв, отсутствие циклов | ✅ | см. `docs/03-architecture/pcmef-architecture.md` |
+| Изоляция слоёв, отсутствие циклов | ✅ | [docs/02-architecture](02-architecture/dependency-diagram.md) (диаграммы пакетов и зависимостей, ацикличный граф) |
 | Классы-сущности не анемичные | ✅ | бизнес-методы в `entity/` (`Vehicle.reserve()`, `Order.complete()`, `InstallmentPlan.calculate()` и др.) |
 
 ## 4. Обязательные паттерны рефакторинга
@@ -49,10 +49,10 @@
 
 | Требование | Статус | Где |
 |------------|:---:|-----|
-| Нормализация до 3НФ | ✅ | `docs/04-database/database-design.md` |
-| PK, FK, UNIQUE, NOT NULL, CHECK | ✅ | `database/schema.sql` |
-| Индексы для часто запрашиваемых полей | ✅ | `database/schema.sql` (раздел индексов) |
-| ER-диаграмма, DDL, стратегия ORM | ✅ | `docs/04-database/`, `database/er-diagram.puml` |
+| Нормализация до 3НФ | ✅ | [docs/03-database/database-design.md](03-database/database-design.md) |
+| PK, FK, UNIQUE, NOT NULL, CHECK | ✅ | `application/database/schema.sql` |
+| Индексы для часто запрашиваемых полей | ✅ | `application/database/schema.sql` (раздел индексов) |
+| ER-диаграмма, DDL, стратегия ORM | ✅ | [docs/03-database/](03-database/er-diagram.md), `application/database/er-diagram.puml` |
 
 ## 6. Целостность данных и обработка исключений
 
@@ -85,8 +85,12 @@
 | 7. Полная валидация данных | ✅ | см. раздел 7 |
 
 ### Дополнительный функционал (сверх минимума)
-Избранное, отзывы и рейтинги, уведомления, аналитическая панель,
-управление каталогом (CRUD) и пользователями, оффлайн-режим, уровни лояльности.
+Онлайн-оплата картой (имитация платёжного шлюза: создание → подтверждение, идемпотентность),
+избранное, отзывы и рейтинги, уведомления с бейджем непрочитанных, аналитическая панель,
+управление каталогом (CRUD) и пользователями, страница проданных авто, настройки с
+переключением темы, оффлайн-режим, уровни лояльности.
+
+> Полный комплект проектной документации по этапам МУ — см. [docs/README.md](README.md).
 
 ## 9. Бонусные направления (МУ, ч. 3.3.5 / 5.3)
 - Админ-панель (управление пользователями и каталогом) — реализована в клиенте.
