@@ -36,19 +36,21 @@ InstallmentPlan, Payment, User) и безопасность (JWT).
 
 ## 3. Запуск и отчёт о покрытии
 
-```bash
-cd application/backend
-./mvnw test                      # или: mvn test
-# HTML-отчёт JaCoCo:
-#   target/site/jacoco/index.html
+Тесты и отчёт о покрытии запускаются через Docker (локальная установка Maven/JDK 17
+не требуется) — из папки `application/backend`:
+
+```powershell
+docker run --rm -v "${PWD}:/app" -v "$HOME/.m2:/root/.m2" -w /app `
+  maven:3.9-eclipse-temurin-17 mvn test
 ```
 
-Плагин JaCoCo подключён в `pom.xml` и формирует отчёт при `mvn test`. Цель по покрытию
-ядра — **> 40 %** (требование МУ для траектории В); фокус покрытия — слои Mediator и
-Entity (бизнес-логика).
+HTML-отчёт JaCoCo формируется в `target/site/jacoco/index.html` (плагин подключён в
+`pom.xml`). Цель по покрытию ядра — **> 40 %** (требование МУ для траектории В); фокус —
+слои Mediator и Entity (бизнес-логика).
 
-> При сдаче рекомендуется приложить скриншот сводки JaCoCo в `docs/images/` (например,
-> `jacoco-summary.png`) и указать итоговый процент здесь.
+**Сводка покрытия JaCoCo:**
+
+![Сводка покрытия JaCoCo](../images/jacoco-summary.png)
 
 ## 4. Проверенные сценарии (ручные/интеграционные)
 
@@ -61,9 +63,18 @@ Entity (бизнес-логика).
 - Запись на тест-драйв; бизнес-правило занятого слота → 422.
 - Валидация полей → 400; нарушение бизнес-правил → 422; Swagger/OpenAPI → 200.
 
+Сгенерированная документация REST API (Swagger UI / OpenAPI):
+
+![Swagger UI — перечень эндпоинтов (1/5)](../images/swagger-ui-1.png)
+![Swagger UI — перечень эндпоинтов (2/5)](../images/swagger-ui-2.png)
+![Swagger UI — перечень эндпоинтов (3/5)](../images/swagger-ui-3.png)
+![Swagger UI — модели запросов и ответов (4/5)](../images/swagger-ui-4.png)
+![Swagger UI — модели запросов и ответов (5/5)](../images/swagger-ui-5.png)
+
 ## 5. Возможности дальнейшего повышения покрытия
 
-Тесты сервисов Notification, Favorite, Payment уже добавлены. Для дальнейшего роста можно:
-- добавить тесты сервисов `Review`, `Dashboard`, `Brand`, `User`;
+Тесты сервисов Notification, Favorite, Payment, Review, User уже добавлены. Для
+дальнейшего роста покрытия можно:
+- добавить тесты сервисов `Dashboard`, `Brand`;
 - интеграционные тесты контроллеров через `MockMvc` (срез web-слоя);
 - проверку маппинга Entity ↔ DTO.

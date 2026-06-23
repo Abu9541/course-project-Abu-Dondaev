@@ -19,8 +19,9 @@ Maven/JDK** (Android SDK не требуется). Конфигурация пр
 [`application/backend/checkstyle.xml`](../../application/backend/checkstyle.xml):
 
 ```powershell
+# из папки application/backend:
 docker run --rm `
-  -v "C:/.../application/backend:/app" -v "$HOME/.m2:/root/.m2" -w /app `
+  -v "${PWD}:/app" -v "$HOME/.m2:/root/.m2" -w /app `
   maven:3.9-eclipse-temurin-17 `
   mvn org.apache.maven.plugins:maven-checkstyle-plugin:3.3.1:checkstyle "-Dcheckstyle.config.location=checkstyle.xml"
 ```
@@ -36,8 +37,13 @@ docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community
 # затем: mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=<token>
 ```
 
-> Скриншоты сводок — в `docs/images/`: `checkstyle.png` (серверная часть),
-> `android-lint.png` (клиент).
+**Скриншот отчёта Checkstyle** (серверная часть):
+
+![Отчёт Checkstyle — статический анализ серверной части](../images/checkstyle.png)
+
+**Скриншот отчёта Android Lint** (клиент):
+
+![Отчёт Android Lint — анализ Android-клиента](../images/android-lint.png)
 
 ## 2.1. Результат прогона Checkstyle
 

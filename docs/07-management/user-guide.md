@@ -81,3 +81,28 @@
 
 Каталог доступен офлайн (показываются сохранённые данные с пометкой «офлайн-режим»).
 Действия, требующие сервера (оплата, запись), доступны при наличии соединения.
+
+## 13. Скриншоты экранов
+
+<table>
+  <tr>
+    <td align="center"><img src="../images/app-catalog.png" width="240"><br>Каталог и фильтры</td>
+    <td align="center"><img src="../images/app-vehicle.png" width="240"><br>Карточка автомобиля</td>
+    <td align="center"><img src="../images/app-purchase.png" width="240"><br>Оформление покупки</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="../images/app-payment.png" width="240"><br>Оплата картой</td>
+    <td align="center"><img src="../images/app-orders.png" width="240"><br>Мои заказы</td>
+    <td align="center"><img src="../images/app-favorites.png" width="240"><br>Избранное</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="../images/app-notifications.png" width="240"><br>Уведомления</td>
+    <td align="center"><img src="../images/app-profile.png" width="240"><br>Профиль</td>
+    <td align="center"><img src="../images/app-settings.png" width="240"><br>Настройки</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="../images/app-dashboard.png" width="240"><br>Аналитика</td>
+    <td align="center"><img src="../images/app-manager-requests.png" width="240"><br>Заявки (менеджер)</td>
+    <td align="center"><img src="../images/app-sold.png" width="240"><br>Проданные (администратор)</td>
+  </tr>
+</table>
